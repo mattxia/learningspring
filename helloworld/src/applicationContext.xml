@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!-- id必须是IOC容器唯一的 -->
+<bean id="helloWorld2" class="com.unicsoft.spring.HelloWorld">
+	<property name="name2" value="Spring"></property>
+</bean>
+
+<!-- id必须是IOC容器唯一的,通过属性方法注入
+<bean id="helloWorld" class="com.unicsoft.spring.HelloWorld">
+	<property name="name2" value="Spring"></property>
+</bean>
+ -->
+ 
+ <!-- 使用构造器注入属性可以使用参数位置和参数类型，以区分重载的构造器!-->
+ <bean id="car" class="com.unicsoft.spring.Car">
+	<constructor-arg value="Audi"></constructor-arg>
+	<constructor-arg value="Shanghai" ></constructor-arg>
+	<constructor-arg value="500000" type="double"></constructor-arg>
+</bean>
+
+<!-- 使用构造器注入属性可以使用参数位置和参数类型，以区分重载的构造器!-->
+ <bean id="car2" class="com.unicsoft.spring.Car">
+	<constructor-arg value="Baoma" type="java.lang.String"></constructor-arg>
+	<constructor-arg  type="java.lang.String">
+	<!-- 如果值包含特殊字符，可以使用<![CDATA[]]> -->
+	<!-- 属性值还可以使用value子节点进行配置 -->
+		<value><![CDATA[<Shanghai^>]]></value>
+	</constructor-arg>
+	<constructor-arg  type="int">
+		<value>250</value>
+	</constructor-arg>
+</bean>
+
+<bean id="person" class="com.unicsoft.spring.Person">
+	<property name="name" value="mattxia"></property>
+	<property name="age" value="33"></property>
+	<!-- 使用ref来简历bean之间的引用关系 -->
+	<!-- 
+	<property name="car" ref="car2"></property>
+	 -->
+	<!-- 内部Bean，不能被外部引用，只能内部使用 -->
+	<property name="car">
+		<bean id="car3" class="com.unicsoft.spring.Car">
+			<constructor-arg value="Ford Mondeo"></constructor-arg>
+			<constructor-arg value="Changan"></constructor-arg>
+			<constructor-arg value="200000" type="double"></constructor-arg>
+		</bean>
+	</property>
+	<!-- 需要先初始化，才能赋值 -->
+	<property name="car.maxSpeed" value="260"></property>
+</bean>
+
+
+<!-- 使用构造器注入属性可以使用参数位置和参数类型，以区分重载的构造器!-->
+ <bean id="person2" class="com.unicsoft.spring.Person">
+	<constructor-arg value="Tom" type="java.lang.String"></constructor-arg>
+	<constructor-arg  type="int">
+	<!-- 如果值包含特殊字符，可以使用<![CDATA[]]> -->
+	<!-- 属性值还可以使用value子节点进行配置 -->
+		<value>25</value>
+	</constructor-arg>
+	<constructor-arg  ref="car">
+		
+	</constructor-arg>
+</bean>
+
+<bean id="person3" class="com.unicsoft.spring.Person">
+	<constructor-arg value="Tom" type="java.lang.String"></constructor-arg>
+	<constructor-arg  type="int">
+	<!-- 如果值包含特殊字符，可以使用<![CDATA[]]> -->
+	<!-- 属性值还可以使用value子节点进行配置 -->
+		<value>25</value>
+	</constructor-arg>
+	<!-- 测试null值 -->
+	<constructor-arg><null/>
+		
+	</constructor-arg>
+</bean>
+
+<bean id="person4" class="com.unicsoft.spring.Person">
+	<constructor-arg value="Tom" type="java.lang.String"></constructor-arg>
+	<constructor-arg  type="int">
+	<!-- 如果值包含特殊字符，可以使用<![CDATA[]]> -->
+	<!-- 属性值还可以使用value子节点进行配置 -->
+		<value>25</value>
+	</constructor-arg>
+	<!-- 测试null值 -->
+	<constructor-arg ref="car">	
+		
+	</constructor-arg>
+	<!-- 为级联属性赋值 -->
+	<property name="car.maxSpeed" value="250"></property>
+</bean>
+
+<!-- 使用构造器注入属性可以使用参数位置和参数类型，以区分重载的构造器!-->
+ <bean id="car3" class="com.unicsoft.spring.collections.Car">
+	<constructor-arg value="Baoma" type="java.lang.String"></constructor-arg>
+	<constructor-arg  type="java.lang.String">
+	<!-- 如果值包含特殊字符，可以使用<![CDATA[]]> -->
+	<!-- 属性值还可以使用value子节点进行配置 -->
+		<value><![CDATA[<Shanghai^>]]></value>
+	</constructor-arg>
+	<constructor-arg  type="int">
+		<value>250</value>
+	</constructor-arg>
+</bean>
+
+<!-- 使用构造器注入属性可以使用参数位置和参数类型，以区分重载的构造器!-->
+ <bean id="car4" class="com.unicsoft.spring.collections.Car">
+	<constructor-arg value="Baoma" type="java.lang.String"></constructor-arg>
+	<constructor-arg  type="java.lang.String">
+	<!-- 如果值包含特殊字符，可以使用<![CDATA[]]> -->
+	<!-- 属性值还可以使用value子节点进行配置 -->
+		<value><![CDATA[<Shanghai^>]]></value>
+	</constructor-arg>
+	<constructor-arg  type="int">
+		<value>250</value>
+	</constructor-arg>
+</bean>
+
+<bean id="person5" class="com.unicsoft.spring.collections.Person">
+	<property name="name" value="Amanda"></property>
+	<property name="age" value="33"></property>
+	<!-- 测试集合类型的值 -->
+	<property name="cars">
+		<list>
+		<ref bean="car3"></ref>
+		<ref bean="car4"></ref>
+		</list>
+	</property>
+</bean>
+</beans>
+
+
+
