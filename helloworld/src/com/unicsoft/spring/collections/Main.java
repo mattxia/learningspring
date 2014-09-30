@@ -15,7 +15,19 @@ public class Main {
 		
 		Person person5 = (Person)ctx.getBean("person5");
 		System.out.println(person5);
-
+		
+		NewPerson newPerson = (NewPerson)ctx.getBean("newPerson");
+		System.out.println(newPerson);
+		
+		DataSource dataSource = (DataSource)ctx.getBean("dataSource");
+		System.out.println(dataSource);
+		
+		Person person7 = (Person)ctx.getBean("person7");
+		System.out.println(person7);
+		
+		
+		Person person8 = (Person)ctx.getBean("person8");
+		System.out.println(person8);
 	}
 
 }

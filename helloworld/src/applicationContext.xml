@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 <!-- id必须是IOC容器唯一的 -->
 <bean id="helloWorld2" class="com.unicsoft.spring.HelloWorld">
 	<property name="name2" value="Spring"></property>
@@ -130,6 +133,50 @@
 		<ref bean="car4"></ref>
 		</list>
 	</property>
+</bean>
+
+<!-- 配置map属性值 -->
+<bean id="newPerson" class="com.unicsoft.spring.collections.NewPerson">
+	<property name="name" value="Rose"></property>
+	<property name="age" value="28"></property>
+	<property name="cars">
+	<!-- 使用map节点及map的entry子节点配置Map类型的成员变量 -->
+		<map>
+			<entry key="AA" value-ref="car3"></entry>
+			<entry key="BB" value-ref="car4"></entry>
+		</map>
+	</property>
+</bean>
+
+<!-- 配置Properties -->
+<bean id="dataSource" class="com.unicsoft.spring.collections.DataSource">
+	<property name="properties">
+		<props>
+			<prop key="user">root</prop>
+			<prop key="password">123456</prop>
+			<prop key="jdbcurl">jdbc:mysql://userl</prop>
+			<prop key="driverClass">com.mysql.jdbc.driver</prop>
+		</props>
+	</property>
+</bean>
+
+<!-- 配置独立的集合bean，以便多个bean进行引用,1.需要引入util命名空间 -->
+<util:list id="cars">
+	<ref bean="car3"/>
+	<ref bean="car4"/>
+</util:list>
+
+<bean id="person7" class="com.unicsoft.spring.collections.Person">
+	<property name="name" value="Amanda"></property>
+	<property name="age" value="33"></property>
+	<!-- 测试集合类型的值 -->
+	<property name="cars" ref="cars">
+	</property>
+</bean>
+
+<!-- 通过p命名空间对bean的属性赋值，需要先导入p命名空间 ,相对于传统的配置方式更加的简洁-->
+<bean id="person8" class="com.unicsoft.spring.collections.Person" p:age="25" p:name="Tomcat" p:cars-ref="cars" >
+	
 </bean>
 </beans>
 
