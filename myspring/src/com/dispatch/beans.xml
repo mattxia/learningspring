@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:tx="http://www.springframework.org/schema/tx"
+     xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+     xmlns:context="http://www.springframework.org/schema/context"
+     xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+    <!-- 配置一个DBUtil对象 -->
+    <bean id="dbutil" class="com.dispatch.DBUtil">
+        <property name="name" value="${name}"></property>
+        <property name="url" value="${url}"></property>
+        <property name="driverName" value="${driver}"></property>
+        <property name="pwd" value="${pwd}"></property>
+    </bean>
+    <!-- 引入db.properties -->
+    <context:property-placeholder location="classpath:com/dispatch/db.properties,classpath:com/dispatch/db2.properties"/>
+    
+    
+    <bean id="dbutil2" class="com.dispatch.DBUtil">
+        <property name="name" value="${db2.name}"></property>
+        <property name="url" value="${db2.url}"></property>
+        <property name="driverName" value="${db2.driver}"></property>
+        <property name="pwd" value="${db2.pwd}"></property>
+    </bean>
+    
+    
+</beans>
+
+
+

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:tx="http://www.springframework.org/schema/tx"
+     xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+     xmlns:context="http://www.springframework.org/schema/context"
+     xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+    <bean id="department" class="com.collection.Department">
+        <property name="name" value="Finance Dept"></property>
+        <!-- 内部bean,只能给department
+        <property name="emp">
+            <bean id="manager">
+                <property name=""></property>
+            </bean>
+        </property>
+         -->
+        <property name="empList">
+            <list>
+                <ref bean="emp2"/>
+                <ref bean="emp1"/>
+                <ref bean="emp1"/>
+                <ref bean="emp1"/>
+                <ref bean="emp1"/>
+                <ref bean="emp1"/>
+            </list>            
+        </property>
+        <property name="empSet">
+            <!-- 给set注入值 ,set只能存放不同的对象-->
+            <set>
+                <ref bean="emp1"></ref>
+                <ref bean="emp2"></ref>
+                <ref bean="emp2"></ref>
+                <ref bean="emp2"></ref>
+                <ref bean="emp2"></ref>
+                <ref bean="emp2"></ref>
+                
+            </set>
+        </property>
+        <property name="empMaps">
+            <!-- 给Map注入值 ,Map只能存放不同的对象-->
+            <map>
+                <entry key="1" value-ref="emp1"/>
+                <entry key="2" value-ref="emp2"/>
+            </map>
+        </property>
+        <!-- 给属性集合配置 -->
+        <property name="props">
+            <props>
+                <prop key="pp1">ABCD</prop>
+                <prop key="pp2">EFGH</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- 给list注入值 -->
+    <bean id="emp1" class="com.collection.Employee">
+        <property name="name" value="beijing"></property>
+        <property name="id" value="1"></property>
+    </bean>
+    <bean id="emp2" class="com.collection.Employee">
+        <property name="name" value="tianjin"></property>
+        <property name="id" value="2"></property>
+    </bean>
+    
+    
+</beans>
+
+
+

@@ -1,0 +1,2 @@
+Spring框架提供了5种通知，Around,Before,After,Throws,import
+代理对象（Spring提供了proxyFactoryBean),代理接口完成代理任务

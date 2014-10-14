@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:tx="http://www.springframework.org/schema/tx"
+     xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+     xmlns:context="http://www.springframework.org/schema/context"
+     xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd"
+     >
+     <!-- 1.配置被代理的对象 -->
+     <bean id="testService1" class="com.aop.test.TestService1">
+         <property name="name" value="MattXia"></property>
+     </bean>
+     <!-- 2.配置前置通知 -->
+     <bean id="myMethodBeforeAdvice" class="com.aop.test.MyMethodBeforeAdvice">
+         
+     </bean>
+     <!-- 2.配置后置通知 -->
+     <bean id="myAfterReturningAdvice" class="com.aop.test.MyAfterReturningAdvice" />
+     <!-- 2.3.配置环绕通知 -->
+     <bean id="myMethodInterceptor" class="com.aop.test.MyMethodInterceptor" />
+     <!-- 2.4.配置异常通知 -->
+     <bean id="myThrowsAdvice" class="com.aop.test.MyThrowsAdvice" />
+     <!-- 2.5：自定义前置通知的切入点 -->
+     <bean id="myMethodBeforeFilter" class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor" >
+     	<property name="advice" ref="myMethodBeforeAdvice" ></property>
+     	<property name="mappedNames">
+     	    <list>
+     	        <value>sayBye</value>
+     	    </list>
+     	</property>
+     </bean>
+     <!-- 3.配置代理对象 
+     	实际上相当于ProxyFactoryBean implements TestServiceIter,TestServiceIter2
+     	interface Iter1{};
+     	class A implments Iter1,Iter2{}
+     	Iter1 a = new A();
+     	Iter2 b = (Iter2)a;
+     	
+     	
+     -->
+     <bean id="proxyFactoryBean" class="org.springframework.aop.framework.ProxyFactoryBean" >
+	     <!-- 配置接口集 -->
+	     <property name="proxyInterfaces">
+	         <list>
+	             <value>com.aop.test.TestServiceIter</value>
+	             <value>com.aop.test.TestServiceIter2</value>
+	         </list>         
+	     </property>
+	     <!-- 把通知织入到代理对象 -->
+	     <property name="interceptorNames">
+	         <list>
+	             <!-- 相当于把MyMethodBeforeAdvice和代理对象关联起来 
+	             <value>myMethodBeforeAdvice</value>
+	             -->
+	             <!-- 当使用环绕通知的时候，就替换成环绕的对象 -->
+	             <value>myMethodBeforeFilter</value>
+	             <!-- 织入后置通知-->
+	             <value>myAfterReturningAdvice</value>
+	             <!-- 织入环绕通知-->
+	             <value>myMethodInterceptor</value>
+	             <!-- 织入异常通知-->
+	             <value>myThrowsAdvice</value>
+	         </list>
+	     </property>
+	     <!-- 配置被代理对象 -->
+	     <property name="target" ref="testService1"/>
+     </bean>
+     
+     
+     
+    
+</beans>
+
+
+
