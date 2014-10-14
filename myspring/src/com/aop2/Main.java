@@ -11,6 +11,8 @@ public class Main {
 		ArithmeticCalculator target = new ArithmeticCalculatorImpl();
 		ArithmeticCalculator proxy = new ArithmeticCalculatorLoggingProxy(target).getLoggingProxy();
 		
+		//为什么这里调用System.out.println(proxy)就不行???是因为参数为空Arrays.asList不能转.
+		System.out.println(proxy.getClass().getName());
 		
 		
 		int result = proxy.add(1, 2);
