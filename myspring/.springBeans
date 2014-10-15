@@ -9,6 +9,7 @@
 	<configs>
 		<config>src/applicationContext.xml</config>
 		<config>src/com/annotation/beans.xml</config>
+		<config>src/com/aop2/beans.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
