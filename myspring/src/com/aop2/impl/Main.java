@@ -13,6 +13,9 @@ public class Main {
 		//这个怎么区分是接口还是类?
 		ArithmeticCalculator ari = ac.getBean(ArithmeticCalculator.class);
 		
+		//不声明成@Component，获取出错
+		TestWithoutComponent testWithoutComponent = ac.getBean(TestWithoutComponent.class);
+		
 		int result = ari.add(3, 6);
 		
 		
